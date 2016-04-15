@@ -28,6 +28,7 @@
   "devDependencies": {
     "browserify": "^13.0.0",
     "flux": "^2.1.1",
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "reactify": "^1.1.1"
   }
 }
