@@ -24,5 +24,8 @@
   "bugs": {
     "url": "https://github.com/khalilgharbaoui/movie-reactjs-flux/issues"
   },
-  "homepage": "https://github.com/khalilgharbaoui/movie-reactjs-flux#readme"
+  "homepage": "https://github.com/khalilgharbaoui/movie-reactjs-flux#readme",
+  "devDependencies": {
+    "browserify": "^13.0.0"
+  }
 }
