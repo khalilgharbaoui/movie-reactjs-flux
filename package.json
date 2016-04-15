@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/khalilgharbaoui/movie-reactjs-flux#readme",
   "devDependencies": {
-    "browserify": "^13.0.0"
+    "browserify": "^13.0.0",
+    "flux": "^2.1.1"
   }
 }
