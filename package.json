@@ -1,0 +1,28 @@
+{
+  "name": "movie-reactjs-flux",
+  "version": "1.0.0",
+  "description": "Simple Movie finder in React, With a Flux achitecture.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khalilgharbaoui/movie-reactjs-flux.git"
+  },
+  "keywords": [
+    "ReactJS",
+    "Flux",
+    "Gulp",
+    "Ajax",
+    "jQuery",
+    "JSON",
+    "Movies"
+  ],
+  "author": "Khalil Gharbaoui",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khalilgharbaoui/movie-reactjs-flux/issues"
+  },
+  "homepage": "https://github.com/khalilgharbaoui/movie-reactjs-flux#readme"
+}
