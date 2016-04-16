@@ -1,3 +1,11 @@
-.class{
-  color:white;
+body{
+  margin-top:30px !important;
+}
+.search-form{
+  width: 100%;
+  margin:auto;
+  background: #f4f4f4;
+  padding: 0 20px 20px 20px;
+  border: 1px #ccc solid;
+  border-radius: 10px;
 }

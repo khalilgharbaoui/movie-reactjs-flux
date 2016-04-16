@@ -20,6 +20,6 @@ class DispatcherClass extends Dispatcher {
   // }
 }
 
-// const AppDispatcher = new DispatcherClass();
+const AppDispatcher = new DispatcherClass();
 
 export default AppDispatcher;
