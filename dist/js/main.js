@@ -19406,22 +19406,16 @@ var App = function (_React$Component) {
   _createClass(App, [{
     key: 'render',
     value: function render() {
-      return _react2.default.createElement('div', null);
+      return _react2.default.createElement(
+        'div',
+        null,
+        'my app'
+      );
     }
   }]);
 
   return App;
 }(_react2.default.Component);
-
-// var React = require('react');
-// var AppActions = require('../actions/AppActions');
-// var AppStore = require('../stores/AppStore');
-//
-// var App = React.createClass({
-//   render :function(){
-//     returen
-//   }
-// })
 
 exports.default = App;
 
