@@ -19976,10 +19976,14 @@ var _AppConstants2 = _interopRequireDefault(_AppConstants);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var AppActions = function AppActions() {
-  _classCallCheck(this, AppActions);
+var AppActions = {
+  searchMovies: function searchMovies(movie) {
+    console.log('Searching Movie ' + movie.title);
+    _AppDispatcher2.default.handleViewAction({
+      actionType: _AppConstants2.default.SEARCH_MOVIES,
+      movie: movie
+    });
+  }
 };
 
 exports.default = AppActions;
@@ -20096,7 +20100,7 @@ var SearchForm = function (_React$Component) {
         ),
         _react2.default.createElement(
           'form',
-          { onSubmit: this.onSubmit },
+          { onSubmit: this.onSubmit.bind(this) },
           _react2.default.createElement(
             'div',
             { className: 'form-group' },
@@ -20114,7 +20118,10 @@ var SearchForm = function (_React$Component) {
     key: 'onSubmit',
     value: function onSubmit(e) {
       e.preventDefault();
-      console.log(this);
+      var movie = {
+        title: this.refs.title.value.trim()
+      };
+      _AppActions2.default.searchMovies(movie);
     }
   }]);
 
@@ -20130,9 +20137,11 @@ exports.default = SearchForm;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var AppConstants = exports.AppConstants = {
+var AppConstants = {
   SEARCH_MOVIES: 'SEARCH_MOVIES'
 };
+
+exports.default = AppConstants;
 
 
 },{}],174:[function(require,module,exports){

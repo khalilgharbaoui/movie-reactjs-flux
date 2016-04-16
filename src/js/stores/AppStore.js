@@ -20,7 +20,7 @@ class AppStore extends EventEmitter{
   addChangeListener(callback){
 
     this.on('change', callback);
-
+    
   }
 
   removeChangeListener(callback){

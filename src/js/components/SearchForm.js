@@ -4,7 +4,7 @@ import AppStore from '../stores/AppStore';
 
 
  class SearchForm extends React.Component{
-
+   
   render(){
 
     return(
@@ -12,7 +12,7 @@ import AppStore from '../stores/AppStore';
         <h1 className="text-center">
           Search for Movies!
        </h1>
-       <form onSubmit={this.onSubmit}>
+       <form onSubmit={this.onSubmit.bind(this)}>
          <div className="form-group">
          <input type="text" className="form-control" ref="title" placeholder="Enter a Movie Title" />
          </div>
@@ -24,7 +24,10 @@ import AppStore from '../stores/AppStore';
   }
   onSubmit(e){
     e.preventDefault();
-    console.log(this);
+    var movie = {
+      title: this.refs.title.value.trim()
+    }
+    AppActions.searchMovies(movie);
   }
 }
 

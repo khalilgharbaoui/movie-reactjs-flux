@@ -1,3 +1,5 @@
-export const AppConstants = {
+const AppConstants = {
   SEARCH_MOVIES: 'SEARCH_MOVIES'
 };
+
+export default AppConstants;
