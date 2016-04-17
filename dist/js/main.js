@@ -19995,7 +19995,7 @@ var AppActions = {
 exports.default = AppActions;
 
 
-},{"../constants/AppConstants":173,"../dispatcher/AppDispatcher":174}],171:[function(require,module,exports){
+},{"../constants/AppConstants":175,"../dispatcher/AppDispatcher":176}],171:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -20020,6 +20020,10 @@ var _SearchForm = require('./SearchForm');
 
 var _SearchForm2 = _interopRequireDefault(_SearchForm);
 
+var _MovieResults = require('./MovieResults');
+
+var _MovieResults2 = _interopRequireDefault(_MovieResults);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20043,7 +20047,7 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 
     _this.state = {
-      movies: getAppState()
+      movies: ''
     };
 
     return _this;
@@ -20062,13 +20066,18 @@ var App = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-
+      if (this.state.movies == '') {
+        var movieResults = '';
+      } else {
+        var movieResults = _react2.default.createElement(_MovieResults2.default, { movies: this.state.movies });
+      }
       console.log('Are The Movies in the current state? (App.js:34) \n' + this.state.movies);
 
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_SearchForm2.default, null)
+        _react2.default.createElement(_SearchForm2.default, null),
+        movieResults
       );
     }
   }, {
@@ -20085,7 +20094,170 @@ var App = function (_React$Component) {
 exports.default = App;
 
 
-},{"../actions/AppActions":170,"../stores/AppStore":176,"./SearchForm":172,"react":169}],172:[function(require,module,exports){
+},{"../actions/AppActions":170,"../stores/AppStore":178,"./MovieResults":173,"./SearchForm":174,"react":169}],172:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _AppActions = require('../actions/AppActions');
+
+var _AppActions2 = _interopRequireDefault(_AppActions);
+
+var _AppStore = require('../stores/AppStore');
+
+var _AppStore2 = _interopRequireDefault(_AppStore);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Movie = function (_React$Component) {
+  _inherits(Movie, _React$Component);
+
+  function Movie() {
+    _classCallCheck(this, Movie);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(Movie).apply(this, arguments));
+  }
+
+  _createClass(Movie, [{
+    key: 'render',
+    value: function render() {
+      var link = 'http://www.imdb.com/title/' + this.props.movie.imdbID;
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'well' },
+        _react2.default.createElement(
+          'div',
+          { className: 'row' },
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-4' },
+            _react2.default.createElement('img', { className: 'thubnail', src: this.props.movie.Poster })
+          ),
+          _react2.default.createElement(
+            'div',
+            { className: 'col-md-8' },
+            _react2.default.createElement(
+              'h4',
+              null,
+              this.props.movie.Title
+            ),
+            _react2.default.createElement(
+              'ul',
+              { className: 'list-group' },
+              _react2.default.createElement(
+                'li',
+                { className: 'list-group-item' },
+                'Year Released: ',
+                this.props.movie.Year
+              ),
+              _react2.default.createElement(
+                'li',
+                { className: 'list-group-item' },
+                'IMDB ID: ',
+                this.props.movie.imdbID
+              )
+            ),
+            _react2.default.createElement(
+              'a',
+              { className: 'btn btn-primary', href: link },
+              'View on IMDB'
+            )
+          )
+        )
+      );
+    }
+  }]);
+
+  return Movie;
+}(_react2.default.Component);
+
+exports.default = Movie;
+
+
+},{"../actions/AppActions":170,"../stores/AppStore":178,"react":169}],173:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _AppActions = require('../actions/AppActions');
+
+var _AppActions2 = _interopRequireDefault(_AppActions);
+
+var _AppStore = require('../stores/AppStore');
+
+var _AppStore2 = _interopRequireDefault(_AppStore);
+
+var _Movie = require('../components/Movie');
+
+var _Movie2 = _interopRequireDefault(_Movie);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var MovieResults = function (_React$Component) {
+  _inherits(MovieResults, _React$Component);
+
+  function MovieResults() {
+    _classCallCheck(this, MovieResults);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(MovieResults).apply(this, arguments));
+  }
+
+  _createClass(MovieResults, [{
+    key: 'render',
+    value: function render() {
+
+      return _react2.default.createElement(
+        'div',
+        { className: '' },
+        _react2.default.createElement(
+          'h3',
+          { className: 'text-center' },
+          'RESULTS'
+        ),
+        this.props.movies.map(function (movie, i) {
+
+          return _react2.default.createElement(_Movie2.default, { movie: movie, key: i });
+        })
+      );
+    }
+  }]);
+
+  return MovieResults;
+}(_react2.default.Component);
+
+exports.default = MovieResults;
+
+
+},{"../actions/AppActions":170,"../components/Movie":172,"../stores/AppStore":178,"react":169}],174:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -20168,7 +20340,7 @@ var SearchForm = function (_React$Component) {
 exports.default = SearchForm;
 
 
-},{"../actions/AppActions":170,"../stores/AppStore":176,"react":169}],173:[function(require,module,exports){
+},{"../actions/AppActions":170,"../stores/AppStore":178,"react":169}],175:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -20182,7 +20354,7 @@ var AppConstants = {
 exports.default = AppConstants;
 
 
-},{}],174:[function(require,module,exports){
+},{}],176:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -20237,7 +20409,7 @@ var AppDispatcher = new DispatcherClass();
 exports.default = AppDispatcher;
 
 
-},{"flux":3}],175:[function(require,module,exports){
+},{"flux":3}],177:[function(require,module,exports){
 'use strict';
 
 var _App = require('./components/App');
@@ -20261,7 +20433,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _reactDom2.default.render(_react2.default.createElement(_App2.default, null), document.getElementById('app'));
 
 
-},{"./components/App":171,"./utils/appAPI":177,"react":169,"react-dom":7}],176:[function(require,module,exports){
+},{"./components/App":171,"./utils/appAPI":179,"react":169,"react-dom":7}],178:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -20366,7 +20538,7 @@ var AppStore = new AppStoreClass();
 exports.default = AppStore;
 
 
-},{"../constants/AppConstants":173,"../dispatcher/AppDispatcher":174,"../utils/appAPI":177,"events":1}],177:[function(require,module,exports){
+},{"../constants/AppConstants":175,"../dispatcher/AppDispatcher":176,"../utils/appAPI":179,"events":1}],179:[function(require,module,exports){
 'use strict';
 
 var _AppActions = require('../actions/AppActions');
@@ -20398,4 +20570,4 @@ module.exports = {
 };
 
 
-},{"../actions/AppActions":170}]},{},[175]);
+},{"../actions/AppActions":170}]},{},[177]);
