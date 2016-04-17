@@ -43,6 +43,6 @@ $ open http://localhost:3000
 ###TODO:
 
 - sort/filter movies by popularity.
-- add multiple end-points.
+- use diffrent end point for better quality
 - grid style layout.
 - Material Design Hierarchical Display (http://zavoloklom.github.io/material-design-hierarchical-display/)
