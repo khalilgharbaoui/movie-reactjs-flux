@@ -19978,10 +19978,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var AppActions = {
   searchMovies: function searchMovies(movie) {
-    console.log('Searching Movie ' + movie.title);
     _AppDispatcher2.default.handleViewAction({
       actionType: _AppConstants2.default.SEARCH_MOVIES,
       movie: movie
+
+    });
+  },
+  receiveMovieResults: function receiveMovieResults(movies) {
+    _AppDispatcher2.default.handleViewAction({
+      actionType: _AppConstants2.default.RECEIVE_MOVIE_RESULTS,
+      movies: movies
     });
   }
 };
@@ -20022,23 +20028,54 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+function getAppState() {
+  return {
+    movies: _AppStore2.default.getMovieResults()
+  };
+}
+
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
 
-  function App() {
+  function App(props) {
     _classCallCheck(this, App);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(App).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
+
+    _this.state = {
+      movies: getAppState()
+    };
+
+    return _this;
   }
 
   _createClass(App, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      _AppStore2.default.addChangeListener(this._onChange.bind(this));
+    }
+  }, {
+    key: 'componentWillUnMount',
+    value: function componentWillUnMount() {
+      _AppStore2.default.removeChangeListener(this._onChange.bind(this));
+    }
+  }, {
     key: 'render',
     value: function render() {
+
+      console.log('Are The Movies in the current state? (App.js:34) \n' + this.state.movies);
+
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(_SearchForm2.default, null)
       );
+    }
+  }, {
+    key: '_onChange',
+    value: function _onChange() {
+      console.log('Movies are Now in (App.js:43) \n' + _AppStore2.default.getMovieResults());
+      this.setState(getAppState());
     }
   }]);
 
@@ -20138,7 +20175,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var AppConstants = {
-  SEARCH_MOVIES: 'SEARCH_MOVIES'
+  SEARCH_MOVIES: 'SEARCH_MOVIES',
+  RECEIVE_MOVIES_RESULT: 'RECEIVE_MOVIE_RESULTS'
 };
 
 exports.default = AppConstants;
@@ -20227,7 +20265,7 @@ _reactDom2.default.render(_react2.default.createElement(_App2.default, null), do
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -20259,46 +20297,71 @@ var CHANGE_EVENT = 'change';
 var _movies = [];
 var _selected = '';
 
-var AppStore = function (_EventEmitter) {
-  _inherits(AppStore, _EventEmitter);
+var AppStoreClass = function (_EventEmitter) {
+    _inherits(AppStoreClass, _EventEmitter);
 
-  function AppStore() {
-    _classCallCheck(this, AppStore);
+    function AppStoreClass() {
+        _classCallCheck(this, AppStoreClass);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(AppStore).apply(this, arguments));
-  }
-
-  _createClass(AppStore, [{
-    key: 'emitChange',
-    value: function emitChange() {
-      this.emit(CHANGE_EVENT);
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(AppStoreClass).apply(this, arguments));
     }
-  }, {
-    key: 'addChangeListener',
-    value: function addChangeListener(callback) {
 
-      this.on('change', callback);
-    }
-  }, {
-    key: 'removeChangeListener',
-    value: function removeChangeListener(callback) {
-      this.removeListener('change', callback);
-    }
-  }]);
+    _createClass(AppStoreClass, [{
+        key: 'setMovieResults',
+        value: function setMovieResults(movies) {
+            _movies = movies;
+            console.log('Results SET (AppStore.js:17): \n' + _movies);
+        }
+    }, {
+        key: 'getMovieResults',
+        value: function getMovieResults() {
+            return _movies;
+            console.log('Results GET (AppStore.js:24): \n' + _movies);
+        }
+    }, {
+        key: 'emitChange',
+        value: function emitChange() {
+            this.emit(CHANGE_EVENT);
+        }
+    }, {
+        key: 'addChangeListener',
+        value: function addChangeListener(callback) {
 
-  return AppStore;
+            this.on('change', callback);
+        }
+    }, {
+        key: 'removeChangeListener',
+        value: function removeChangeListener(callback) {
+            this.removeListener('change', callback);
+        }
+    }]);
+
+    return AppStoreClass;
 }(_events.EventEmitter);
 
 _AppDispatcher2.default.register(function (payload) {
-  var action = payload.action;
+    var action = payload.action;
 
-  switch (action.actionType) {}
+    switch (action.actionType) {
 
+        case _AppConstants2.default.SEARCH_MOVIES:
+            console.log('Searching..(AppStore.js:42): \n' + action.movie.title);
+            _appAPI2.default.searchMovies(action.movie);
+            AppStore.emit(CHANGE_EVENT);
+            break;
 
-  //case
-
-  return true;
+        case _AppConstants2.default.RECEIVE_MOVIE_RESULTS:
+            console.log('Received Results (AppStore.js:48): \n' + action.movies);
+            AppStore.setMovieResults(action.movies);
+            AppStore.emit(CHANGE_EVENT);
+            break;
+    }
+    return true;
 });
+
+// Initialize the singleton to register with the
+// dispatcher and export for React components
+var AppStore = new AppStoreClass();
 
 exports.default = AppStore;
 
@@ -20306,18 +20369,33 @@ exports.default = AppStore;
 },{"../constants/AppConstants":173,"../dispatcher/AppDispatcher":174,"../utils/appAPI":177,"events":1}],177:[function(require,module,exports){
 'use strict';
 
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.searchMovies = searchMovies;
-
 var _AppActions = require('../actions/AppActions');
 
 var _AppActions2 = _interopRequireDefault(_AppActions);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function searchMovies(movie) {}
+module.exports = {
+    searchMovies: function searchMovies(movie) {
+        $.ajax({
+            url: 'http://www.omdbapi.com/?s=' + movie.title + '&_=1460844374331',
+            dataType: 'json',
+            // contentType: 'application/json',
+            method: 'GET',
+            cache: false
+
+        }).success(function (data) {
+
+            _AppActions2.default.receiveMovieResults(data.Search);
+        }).done(function (data) {
+
+            console.log('Total Results, Ajax Call (appAPI.js:21): \n' + data.totalResults);
+            console.log('First Result Title (appAPI.js:22): \n' + data.Search[1].Title);
+        }).fail(function (xhr, status, err) {
+            console.log(err);
+        });
+    }
+};
 
 
 },{"../actions/AppActions":170}]},{},[175]);
