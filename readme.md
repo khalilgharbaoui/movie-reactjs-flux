@@ -24,6 +24,10 @@ Movie Flux is a simple movie search app made with ReactJS and the Flux architect
 - Babelify
 - omdbAPI end point.
 
+###Demo:
+
+http://movie-flux.netlify.com
+
 
 ###Installation
 
