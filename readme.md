@@ -22,7 +22,7 @@ Movie Flux is a simple movie search app made with ReactJS and the Flux architect
 - Gulp-connect
 - Browserify
 - Babelify
-- omdbAPI end point.
+- tmdb.org API end point.
 
 ###Demo:
 
@@ -43,6 +43,6 @@ $ open http://localhost:3000
 ###TODO:
 
 - sort/filter movies by popularity.
-- use diffrent end point for better quality
+- ~~use diffrent end point for better quality~~
 - grid style layout.
 - Material Design Hierarchical Display (http://zavoloklom.github.io/material-design-hierarchical-display/)

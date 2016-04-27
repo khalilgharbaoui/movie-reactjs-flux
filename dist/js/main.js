@@ -20135,7 +20135,8 @@ var Movie = function (_React$Component) {
   _createClass(Movie, [{
     key: 'render',
     value: function render() {
-      var link = 'http://www.imdb.com/title/' + this.props.movie.imdbID;
+      var link = 'https://www.themoviedb.org/movie/' + this.props.movie.id + '-' + this.props.movie.original_title;
+      var imageUrl = 'https://image.tmdb.org/t/p/w185/' + this.props.movie.poster_path;
 
       return _react2.default.createElement(
         'div',
@@ -20146,7 +20147,7 @@ var Movie = function (_React$Component) {
           _react2.default.createElement(
             'div',
             { className: 'col-md-4' },
-            _react2.default.createElement('img', { className: 'thubnail', src: this.props.movie.Poster })
+            _react2.default.createElement('img', { className: 'thubnail', src: imageUrl })
           ),
           _react2.default.createElement(
             'div',
@@ -20154,7 +20155,7 @@ var Movie = function (_React$Component) {
             _react2.default.createElement(
               'h4',
               null,
-              this.props.movie.Title
+              this.props.movie.original_title
             ),
             _react2.default.createElement(
               'ul',
@@ -20163,14 +20164,19 @@ var Movie = function (_React$Component) {
                 'li',
                 { className: 'list-group-item' },
                 'Year Released: ',
-                this.props.movie.Year
+                this.props.movie.release_date
               ),
               _react2.default.createElement(
                 'li',
                 { className: 'list-group-item' },
-                'IMDB ID: ',
-                this.props.movie.imdbID
+                'Averige votes: ',
+                this.props.movie.vote_average
               )
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              this.props.movie.overview
             ),
             _react2.default.createElement(
               'a',
@@ -20550,7 +20556,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 module.exports = {
     searchMovies: function searchMovies(movie) {
         $.ajax({
-            url: 'http://www.omdbapi.com/?s=' + movie.title + '&_=1460844374331',
+            url: 'http://api.themoviedb.org/3/search/movie?query=' + movie.title + '&api_key=455bb69c9403cef5e4cee26bf3c0b505',
             dataType: 'json',
             // contentType: 'application/json',
             method: 'GET',
@@ -20558,11 +20564,11 @@ module.exports = {
 
         }).success(function (data) {
 
-            _AppActions2.default.receiveMovieResults(data.Search);
+            _AppActions2.default.receiveMovieResults(data.results);
         }).done(function (data) {
 
-            console.log('Total Results, Ajax Call (appAPI.js:21): \n' + data.totalResults);
-            console.log('First Result Title (appAPI.js:22): \n' + data.Search[1].Title);
+            console.log('Total Results, Ajax Call (appAPI.js:21): \n' + data.total_results);
+            console.log('First Result Title (appAPI.js:22): \n' + data.results[1].title);
         }).fail(function (xhr, status, err) {
             console.log(err);
         });

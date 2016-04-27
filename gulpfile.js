@@ -48,7 +48,7 @@ gulp.task('copy', function() {
 
 gulp.task('app', function(){
   var options = {
-    uri: 'http://localhost:3000'
+    uri: 'http://127.0.0.1:3000'
     };
   gulp.src(__filename)
   .pipe(open(options));
