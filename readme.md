@@ -4,7 +4,7 @@
 
 ###Info:
 
-Movie Flux is a simple movie search app made with ReactJS and the Flux architecture as an experiment wile i was practicing Flux.
+Movie Flux is a simple movie search app made with ReactJS and the Flux architecture as an experiment while i was practicing Flux.
 
 ###Frameworks & Languages used:
 
